@@ -1,13 +1,11 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {Text, View} from 'react-native';
+import MainNavigator from './src/navigation/MainNavigator';
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <View>
-        <Text>Hello world</Text>
-      </View>
+      <MainNavigator />
     </NavigationContainer>
   );
 }
