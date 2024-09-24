@@ -1,9 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import MainNavigator from './src/navigation/MainNavigator';
+import MainNavigator from '@navigation/MainNavigator';
 import {Provider as ReduxProvider} from 'react-redux';
-import store, {persistor} from './src/store';
 import {PersistGate} from 'redux-persist/integration/react';
+import store, {persistor} from '@store/index';
+
+if (__DEV__) {
+  require('./ReactotronConfig');
+}
 
 function App(): React.JSX.Element {
   return (

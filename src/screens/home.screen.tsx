@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {NavigationProp} from '@react-navigation/native';
-import {useGetTasksQuery} from '../store/apis/task.api';
+import {useGetTasksQuery} from '@store/apis/task.api';
 
 export default function HomeScreen({
   navigation,

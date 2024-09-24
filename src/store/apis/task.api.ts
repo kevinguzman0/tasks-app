@@ -1,5 +1,5 @@
+import {Task} from '@custom_types/task.type';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {Task} from '../../types/task.type';
 import {APP_API_URL} from '../../../mocks/config';
 
 export const taskApi = createApi({
