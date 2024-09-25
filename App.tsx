@@ -7,6 +7,7 @@ import store, {persistor} from '@store/index';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 import {ModalProvider} from '@src/screens/Home/context/ModalContext';
+import {ToastProvider} from 'react-native-toast-notifications';
 
 if (__DEV__) {
   require('./ReactotronConfig');
@@ -17,11 +18,13 @@ function App(): React.JSX.Element {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <GestureHandlerRootView style={styles.container}>
-          <NavigationContainer>
-            <ModalProvider>
-              <MainNavigator />
-            </ModalProvider>
-          </NavigationContainer>
+          <ToastProvider>
+            <NavigationContainer>
+              <ModalProvider>
+                <MainNavigator />
+              </ModalProvider>
+            </NavigationContainer>
+          </ToastProvider>
         </GestureHandlerRootView>
       </PersistGate>
     </ReduxProvider>

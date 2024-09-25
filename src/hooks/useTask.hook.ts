@@ -18,6 +18,7 @@ export const useTasks = () => {
       isLoading: isCreateTaskLoading,
       isSuccess: isCreateTaskSuccess,
       isError: isCreateTaskError,
+      error: createTaskError,
     },
   ] = useCreateTaskMutation();
   const [
@@ -45,6 +46,7 @@ export const useTasks = () => {
     isCreateTaskLoading,
     isCreateTaskSuccess,
     isCreateTaskError,
+    createTaskError,
     updateTask,
     isUpdateTaskLoading,
     isUpdateTaskSuccess,

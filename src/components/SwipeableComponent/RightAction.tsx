@@ -5,18 +5,27 @@ import {SharedValue} from 'react-native-reanimated';
 import {styles} from './styles/leftAction.styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {colors} from '@src/theme/colors';
+import {useTasks} from '@src/hooks/useTask.hook';
 
 type RightActionsProps = {
   dragX: SharedValue<number>;
   swipeableRef: React.RefObject<SwipeableMethods>;
+  id: string;
 };
 
-const RightAction = ({dragX, swipeableRef}: RightActionsProps) => {
+const RightAction = ({dragX, swipeableRef, id}: RightActionsProps) => {
+  const {deleteTask} = useTasks();
+
+  const handleDelete = async () => {
+    swipeableRef.current!.close();
+    await deleteTask(id);
+  };
+
   return (
     <>
       <RectButton
         style={{...styles.rectButton, backgroundColor: colors('red')}}
-        onPress={() => swipeableRef.current!.close()}>
+        onPress={handleDelete}>
         <Icon name="delete" size={20} color={'#fff'} />
       </RectButton>
       <RectButton
@@ -32,4 +41,5 @@ export const renderRightActions = (
   _progress: any,
   translation: SharedValue<number>,
   swipeableRef: React.RefObject<SwipeableMethods>,
-) => <RightAction dragX={translation} swipeableRef={swipeableRef} />;
+  id: string,
+) => <RightAction dragX={translation} swipeableRef={swipeableRef} id={id} />;

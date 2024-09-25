@@ -6,8 +6,10 @@ import TextInputCustom from '@src/components/TextInputCustom';
 import {useTasks} from '@src/hooks/useTask.hook';
 import {useModal} from '../context/ModalContext';
 import {styles} from '../styles/createModal.styles';
+import {useErrorToast} from '@src/utilities/toastConfig';
 
 export default function CreateTaskModal() {
+  const {showErrorToast, showSuccessToast} = useErrorToast();
   const {bottomSheetModalRef} = useModal();
 
   const [title, setTitle] = React.useState('');
@@ -16,17 +18,15 @@ export default function CreateTaskModal() {
   const {createTask, isCreateTaskLoading} = useTasks();
 
   const handleCreateTask = async () => {
-    if (!title || !description) {
-      return;
-    }
-
     try {
       await createTask({title, description}).unwrap();
       setTitle('');
       setDescription('');
       bottomSheetModalRef.current?.dismiss();
-    } catch (error) {
-      console.error('Failed to create task:', error);
+      showSuccessToast('Task created successfully');
+    } catch (errorResponse) {
+      const {error} = errorResponse as {error: {msg: string}};
+      showErrorToast(error.msg);
     }
   };
 

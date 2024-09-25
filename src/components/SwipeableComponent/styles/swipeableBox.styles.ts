@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
   containerContent: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: colors('purple'),
   },
   titleText: {
     fontSize: 16,

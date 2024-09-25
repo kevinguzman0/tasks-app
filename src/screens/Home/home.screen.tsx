@@ -8,14 +8,23 @@ import {styles} from './styles/home.styles';
 import CreateTaskModal from './components/CreateTaskModal';
 import {useModal} from './context/ModalContext';
 import {useTasks} from '@src/hooks/useTask.hook';
+import {selectTasks} from '@src/store/slices/task.reducer';
+import {useAppSelector} from '@src/hooks/store.hook';
 
 export default function HomeScreen() {
-  const {tasks} = useTasks();
+  const {tasks: apiTasks} = useTasks();
+  const {tasks: storeTasks} = useAppSelector(selectTasks);
   const {bottomSheetModalRef} = useModal();
+
+  const tasks = storeTasks || apiTasks;
 
   const handlePresentModalPress = () => {
     bottomSheetModalRef.current?.present();
   };
+
+  const sortedTasks = tasks
+    ?.slice()
+    .sort((a, b) => Number(b.completed) - Number(a.completed));
 
   return (
     <StatusLayout barStyle="dark-content">
@@ -27,7 +36,7 @@ export default function HomeScreen() {
         <Text style={styles.textSubtitle}>Today you have to...</Text>
 
         <FlashList
-          data={tasks}
+          data={sortedTasks}
           renderItem={({item}) => <SwipeableBox item={item} />}
           estimatedItemSize={200}
           contentContainerStyle={styles.containerFlashListContent}
