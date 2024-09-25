@@ -1,79 +1,139 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# TasksApp
 
-# Getting Started
+A React Native app for managing tasks, where users can mark tasks as completed by swiping left, and manage other actions like editing or deleting tasks.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
+ - **Task Management:** Create, edit, and delete tasks.
+ - **Swipe Actions:** Swipe left to mark a task as completed.
+ - **Persistent Data:** Task data persists locally, even after the app is closed.
+ - **Responsive UI:** Optimized for both Android and iOS platforms.
+ - **Real-Time Feedback:** Immediate visual feedback on task actions.
+ - **Unit Testing with Jest:** Unit tests for critical components and logic using Jest.
 
-## Step 1: Start the Metro Server
+## Requirements
+- Node.js (v18 or higher recommended)
+- React Native CLI
+- Android Studio or Xcode for native development (depending on your platform)
+- Git (optional for version control)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Instalation
 
-To start Metro, run the following command from the _root_ of your React Native project:
+1. Clone the repository:
 
-```bash
-# using npm
-npm start
+   ```bash
+   git clone https://github.com/kevinguzman0/tasks-app.git
+   cd TasksApp
 
-# OR using Yarn
-yarn start
-```
+2. Install the dependencies:
 
-## Step 2: Start your Application
+   ```bash
+   npm install
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+3. Install the necessary iOS dependencies (Mac only, for iOS builds):
 
-### For Android
+   ```bash
+   cd ios
+   pod install
+   cd ..
 
-```bash
-# using npm
-npm run android
+4. Start the Metro Server
 
-# OR using Yarn
-yarn android
-```
+   ```bash
+   npm start
+   
+5. Start the app:
 
-### For iOS
+   For iOS:
 
-```bash
-# using npm
-npm run ios
+   ```bash
+   npm run ios
+   ```
 
-# OR using Yarn
-yarn ios
-```
+   For Android:
+
+   ```bash
+   npm run android
 
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## Testing with Jest   
+This project uses Jest for unit testing. Jest is a JavaScript testing framework that works well with React Native and allows you to write tests for components and functions.
+- @testing-library/react-native: A popular testing library for React Native that simplifies writing unit tests for components.
+- @testing-library/jest-native: Provides custom Jest matchers for testing React Native components, making the tests more readable and expressive.
 
-Now that you have successfully run the app, let's modify it.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+1. Run tests
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+  ```bash
+   npm test
+   ```
+
+## Folder Structure
+
+```bash
+TasksApp/
+│
+├── android/        # Android-specific files
+├── ios/            # iOS-specific files
+├── src/            # App source files
+│   ├── components/ # Reusable components
+│   ├── hooks/      # Custom hooks
+│   ├── navigation/ # Navigation configuration
+│   ├── screens/    # App screens
+│   ├── store/      # Global state management
+│   ├── theme/      # Theme-related files (colors, fonts, etc.)
+│   ├── types/      # Type definitions (for TypeScript, if applicable)
+│   ├── utilities/  # Helper functions and utilities
+│   └── __tests__/  # Test files for the app
+├── App.tsx          # Main entry point for the app
+├── README.md       # This README file
+├── package.json    # Project dependencies and scripts
+└── .gitignore      # Files to ignore in version control
+
+```
+
+## Available Scripts
+
+   - npm start: Starts the development server.
+   - npm run android: Builds and runs the app on an Android device/emulator.
+   - npm run ios: Builds and runs the app on an iOS simulator (Mac only).
+   - npm test: Runs the unit tests using Jest.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature-branch).
+3. Make your changes.
+4. Commit your changes (git commit -m 'Add some feature').
+5. Push to the branch (git push origin feature-branch).
+6. Open a pull request.
+
+## Troubleshooting
+
+**Common Issues**
+1. Android build fails with SDK errors: Ensure that the correct SDK path is set in your local.properties file:
+
+   ```bash
+   sdk.dir = /path/to/android/sdk
+
+2. Error: Command pod install failed (iOS):
+
+   - Ensure that CocoaPods is installed (sudo gem install cocoapods).
+   - Run pod install inside the ios directory.
+
+3. Metro bundler not starting:
+
+   - Clear the cache by running npm start -- --reset-cache.
+
+4. App stuck on white screen:
+
+   - Ensure that all dependencies are installed correctly.
+   - Run npm run android or npm run ios again after clearing the cache.
+
 
 ## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
+You've successfully run your React Native App. :partying_face:
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
