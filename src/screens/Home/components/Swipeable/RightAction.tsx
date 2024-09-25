@@ -6,19 +6,29 @@ import {styles} from './styles/leftAction.styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {colors} from '@src/theme/colors';
 import {useTasks} from '@src/hooks/useTask.hook';
+import {useModal} from '../../context/ModalContext';
+import {Task} from '@src/types/task.type';
 
 type RightActionsProps = {
   dragX: SharedValue<number>;
   swipeableRef: React.RefObject<SwipeableMethods>;
-  id: string;
+  task: Task;
 };
 
-const RightAction = ({dragX, swipeableRef, id}: RightActionsProps) => {
+const RightAction = ({dragX, swipeableRef, task}: RightActionsProps) => {
   const {deleteTask} = useTasks();
+  const {bottomSheetModalRef, editHandle, editTaskHandle} = useModal();
 
   const handleDelete = async () => {
     swipeableRef.current!.close();
-    await deleteTask(id);
+    await deleteTask(task._id);
+  };
+
+  const handleUpdate = async () => {
+    swipeableRef.current!.close();
+    bottomSheetModalRef.current?.present();
+    editHandle(true);
+    editTaskHandle(task);
   };
 
   return (
@@ -30,7 +40,7 @@ const RightAction = ({dragX, swipeableRef, id}: RightActionsProps) => {
       </RectButton>
       <RectButton
         style={{...styles.rectButton, backgroundColor: colors('yellow')}}
-        onPress={() => swipeableRef.current!.close()}>
+        onPress={handleUpdate}>
         <Icon name="edit" size={20} color={'#fff'} />
       </RectButton>
     </>
@@ -41,5 +51,7 @@ export const renderRightActions = (
   _progress: any,
   translation: SharedValue<number>,
   swipeableRef: React.RefObject<SwipeableMethods>,
-  id: string,
-) => <RightAction dragX={translation} swipeableRef={swipeableRef} id={id} />;
+  task: Task,
+) => (
+  <RightAction dragX={translation} swipeableRef={swipeableRef} task={task} />
+);

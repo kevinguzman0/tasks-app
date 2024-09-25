@@ -6,7 +6,6 @@ import Swipeable, {
 import {Task} from '@src/types/task.type';
 import {styles} from './styles/swipeableBox.styles';
 import {renderLeftActions} from './LeftAction';
-import {renderRightActions} from './RightAction';
 import {colors} from '@src/theme/colors';
 import Animated, {
   SharedValue,
@@ -14,6 +13,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {renderRightActions} from './RightAction';
 
 export default function SwipeableBox({item}: {item: Task}) {
   const swipeableRow = useRef<SwipeableMethods>(null);
@@ -53,7 +53,7 @@ export default function SwipeableBox({item}: {item: Task}) {
       rightThreshold={40}
       containerStyle={styles.container}
       renderRightActions={(_, progress) =>
-        renderRightActions(_, progress, swipeableRow, item._id)
+        renderRightActions(_, progress, swipeableRow, item)
       }
       renderLeftActions={(_, progress) =>
         renderLeftActions(_, progress, swipeableRow, item)

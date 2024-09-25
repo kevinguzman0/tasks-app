@@ -1,24 +1,25 @@
 import {Text, View} from 'react-native';
 import React from 'react';
 import {FlashList} from '@shopify/flash-list';
-import SwipeableBox from '@src/components/SwipeableComponent/SwipeableBox';
 import StatusLayout from '@src/components/Layouts/StatusLayout';
 import RoundButton from '@src/components/Buttons/RoundButton';
 import {styles} from './styles/home.styles';
-import CreateTaskModal from './components/CreateTaskModal';
+import CreateUpdateTaskModal from './components/CreateUpdateTaskModal';
 import {useModal} from './context/ModalContext';
 import {useTasks} from '@src/hooks/useTask.hook';
 import {selectTasks} from '@src/store/slices/task.reducer';
 import {useAppSelector} from '@src/hooks/store.hook';
+import SwipeableBox from './components/Swipeable/SwipeableBox';
 
 export default function HomeScreen() {
   const {tasks: apiTasks} = useTasks();
   const {tasks: storeTasks} = useAppSelector(selectTasks);
-  const {bottomSheetModalRef} = useModal();
+  const {bottomSheetModalRef, editHandle} = useModal();
 
   const tasks = storeTasks || apiTasks;
 
   const handlePresentModalPress = () => {
+    editHandle(false);
     bottomSheetModalRef.current?.present();
   };
 
@@ -47,7 +48,7 @@ export default function HomeScreen() {
         <RoundButton iconName="plus" onPress={handlePresentModalPress} />
       </View>
 
-      <CreateTaskModal />
+      <CreateUpdateTaskModal />
     </StatusLayout>
   );
 }

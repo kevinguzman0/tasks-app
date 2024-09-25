@@ -3094,6 +3094,7 @@ __metadata:
     react-native-config: ^1.5.3
     react-native-gesture-handler: ^2.19.0
     react-native-reanimated: ^3.15.3
+    react-native-responsive-screen: ^1.4.2
     react-native-safe-area-context: ^4.11.0
     react-native-screens: ^3.34.0
     react-native-toast-notifications: ^3.4.0
@@ -8228,6 +8229,15 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 573186a493c06286a5d7f048e8d15422b02e098e666abe3756a806a7a674f5598f4289e58faae894c231597d5acbbed4395dbf77e02cef9d8e03518f288ec4f6
+  languageName: node
+  linkType: hard
+
+"react-native-responsive-screen@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "react-native-responsive-screen@npm:1.4.2"
+  peerDependencies:
+    react-native: ">=0.35"
+  checksum: f854d42e2fdfde80f31b9d3eab3bc9665cf312e5b3953b4a14dc36dc27b2dbe03b8520880ea267376eea7b664af7eb900ae88ef4004a65820b48ad9ac2fc5feb
   languageName: node
   linkType: hard
 

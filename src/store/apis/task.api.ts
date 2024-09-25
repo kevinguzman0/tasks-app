@@ -1,12 +1,12 @@
 import {Task} from '@custom_types/task.type';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {APP_API_URL} from '../../../mocks/config';
 import {
   createTask,
   deleteTask,
   setTasks,
   updateTask,
 } from '../slices/task.reducer';
+import {APP_API_URL} from '@src/utilities/api';
 
 export const taskApi = createApi({
   reducerPath: 'taskApi',

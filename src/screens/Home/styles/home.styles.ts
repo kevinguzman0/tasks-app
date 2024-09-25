@@ -1,4 +1,5 @@
 import {colors} from '@src/theme/colors';
+import {hp} from '@src/utilities/responsive';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: '25%',
+    height: hp(24),
     justifyContent: 'center',
     paddingLeft: 20,
   },
@@ -25,7 +26,7 @@ export const styles = StyleSheet.create({
     top: 150,
     left: 0,
     right: 0,
-    height: '70%',
+    height: hp(62),
     backgroundColor: colors('white'),
     borderTopLeftRadius: 45,
   },
@@ -39,7 +40,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
-    height: '20%',
+    height: hp(20),
     backgroundColor: colors('white'),
     justifyContent: 'center',
     alignItems: 'center',
