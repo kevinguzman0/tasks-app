@@ -4,6 +4,9 @@ import MainNavigator from '@navigation/MainNavigator';
 import {Provider as ReduxProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import store, {persistor} from '@store/index';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
+import {ModalProvider} from '@src/screens/Home/context/ModalContext';
 
 if (__DEV__) {
   require('./ReactotronConfig');
@@ -13,12 +16,21 @@ function App(): React.JSX.Element {
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer>
-          <MainNavigator />
-        </NavigationContainer>
+        <GestureHandlerRootView style={styles.container}>
+          <NavigationContainer>
+            <ModalProvider>
+              <MainNavigator />
+            </ModalProvider>
+          </NavigationContainer>
+        </GestureHandlerRootView>
       </PersistGate>
     </ReduxProvider>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 export default App;
