@@ -12,7 +12,8 @@
       "@store/*": ["./src/store/*"],
       "@utils/*": ["./src/utils/*"],
       "@custom_types/*": ["./src/types/*"]
-    }
+    },
+    "types": ["jest"]
   },
   "exclude": ["node_modules"]
 }

@@ -87,11 +87,17 @@ export default function CreateUpdateTaskModal() {
 
         <View style={styles.padding}>
           <TextInputCustom
+            inputProps={{
+              testID: 'title-input',
+            }}
             placeholder="Title"
             value={title}
             onChangeText={setTitle}
           />
           <TextInputCustom
+            inputProps={{
+              testID: 'description-input',
+            }}
             placeholder="Description"
             value={description}
             onChangeText={setDescription}
@@ -99,7 +105,10 @@ export default function CreateUpdateTaskModal() {
         </View>
 
         <View style={styles.containerButton}>
-          <TouchableOpacity style={styles.button} onPress={handleTask}>
+          <TouchableOpacity
+            testID="create-button"
+            style={styles.button}
+            onPress={handleTask}>
             {isCreateTaskLoading ? (
               <ActivityIndicator color="#fff" />
             ) : (

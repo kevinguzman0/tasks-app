@@ -1,4 +1,4 @@
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet, TextInputProps} from 'react-native';
 import React from 'react';
 import {colors} from '@src/theme/colors';
 
@@ -6,12 +6,14 @@ type TextInputCustomProps = {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  inputProps?: TextInputProps;
 };
 
 export default function TextInputCustom({
   placeholder,
   value,
   onChangeText,
+  ...props
 }: TextInputCustomProps) {
   return (
     <TextInput
@@ -20,6 +22,7 @@ export default function TextInputCustom({
       placeholderTextColor={colors('darkGrey')}
       value={value}
       onChangeText={onChangeText}
+      {...props}
     />
   );
 }
