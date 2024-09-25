@@ -1,6 +1,5 @@
 import {Text, View} from 'react-native';
 import React from 'react';
-import {useGetTasksQuery} from '@store/apis/task.api';
 import {FlashList} from '@shopify/flash-list';
 import SwipeableBox from '@src/components/SwipeableComponent/SwipeableBox';
 import StatusLayout from '@src/components/Layouts/StatusLayout';
@@ -8,9 +7,10 @@ import RoundButton from '@src/components/Buttons/RoundButton';
 import {styles} from './styles/home.styles';
 import CreateTaskModal from './components/CreateTaskModal';
 import {useModal} from './context/ModalContext';
+import {useTasks} from '@src/hooks/useTask.hook';
 
 export default function HomeScreen() {
-  const {data: Tasks} = useGetTasksQuery();
+  const {tasks} = useTasks();
   const {bottomSheetModalRef} = useModal();
 
   const handlePresentModalPress = () => {
@@ -27,10 +27,11 @@ export default function HomeScreen() {
         <Text style={styles.textSubtitle}>Today you have to...</Text>
 
         <FlashList
-          data={Tasks}
+          data={tasks}
           renderItem={({item}) => <SwipeableBox item={item} />}
           estimatedItemSize={200}
           contentContainerStyle={styles.containerFlashListContent}
+          showsVerticalScrollIndicator={false}
         />
       </View>
       <View style={styles.containerButton}>

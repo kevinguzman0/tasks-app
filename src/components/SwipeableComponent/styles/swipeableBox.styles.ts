@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     borderRadius: 14,
     backgroundColor: colors('purple'),
+    marginVertical: 5,
   },
   containerContent: {
     paddingVertical: 8,

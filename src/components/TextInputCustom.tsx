@@ -4,14 +4,22 @@ import {colors} from '@src/theme/colors';
 
 type TextInputCustomProps = {
   placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
 };
 
-export default function TextInputCustom({placeholder}: TextInputCustomProps) {
+export default function TextInputCustom({
+  placeholder,
+  value,
+  onChangeText,
+}: TextInputCustomProps) {
   return (
     <TextInput
       placeholder={placeholder}
       style={styles.input}
       placeholderTextColor={colors('darkGrey')}
+      value={value}
+      onChangeText={onChangeText}
     />
   );
 }

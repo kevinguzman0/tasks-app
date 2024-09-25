@@ -1,11 +1,35 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React from 'react';
 import ButtonSheetModal from '@src/components/Modals/ButtonSheetModal';
 import {BottomSheetView} from '@gorhom/bottom-sheet';
-import {colors} from '@src/theme/colors';
 import TextInputCustom from '@src/components/TextInputCustom';
+import {useTasks} from '@src/hooks/useTask.hook';
+import {useModal} from '../context/ModalContext';
+import {styles} from '../styles/createModal.styles';
 
 export default function CreateTaskModal() {
+  const {bottomSheetModalRef} = useModal();
+
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
+
+  const {createTask, isCreateTaskLoading} = useTasks();
+
+  const handleCreateTask = async () => {
+    if (!title || !description) {
+      return;
+    }
+
+    try {
+      await createTask({title, description}).unwrap();
+      setTitle('');
+      setDescription('');
+      bottomSheetModalRef.current?.dismiss();
+    } catch (error) {
+      console.error('Failed to create task:', error);
+    }
+  };
+
   return (
     <ButtonSheetModal>
       <BottomSheetView style={styles.contentContainer}>
@@ -14,66 +38,28 @@ export default function CreateTaskModal() {
         </View>
 
         <View style={styles.padding}>
-          <TextInputCustom placeholder="Title" />
-          <TextInputCustom placeholder="Description" />
+          <TextInputCustom
+            placeholder="Title"
+            value={title}
+            onChangeText={setTitle}
+          />
+          <TextInputCustom
+            placeholder="Description"
+            value={description}
+            onChangeText={setDescription}
+          />
         </View>
 
         <View style={styles.containerButton}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.textButton}>Create Task</Text>
+          <TouchableOpacity style={styles.button} onPress={handleCreateTask}>
+            {isCreateTaskLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.textButton}>Create Task</Text>
+            )}
           </TouchableOpacity>
         </View>
       </BottomSheetView>
     </ButtonSheetModal>
   );
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    padding: 25,
-    backgroundColor: colors('white'),
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    elevation: 10,
-  },
-  containerTitle: {
-    backgroundColor: colors('purple'),
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '30%',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    justifyContent: 'center',
-    paddingLeft: 20,
-  },
-  containerButton: {
-    position: 'absolute',
-    bottom: 40,
-    left: 35,
-    right: 35,
-  },
-  button: {
-    backgroundColor: colors('blue'),
-    paddingVertical: 18,
-    elevation: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  title: {
-    color: colors('white'),
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  padding: {
-    paddingTop: 100,
-  },
-  textButton: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#fff',
-  },
-});

@@ -1,27 +1,47 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useModal} from '@src/screens/Home/context/ModalContext';
+import {Keyboard} from 'react-native';
 
 export default function ButtonSheetModal({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const {bottomSheetModalRef} = useModal();
-  const snapPoints = useMemo(() => ['55%', '55%'], []);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-  // const handleSheetChanges = useCallback((index: number) => {
-  //   console.log('handleSheetChanges', index);
-  // }, []);
+  const {bottomSheetModalRef} = useModal();
+  const snapPoints = useMemo(
+    () => (isKeyboardVisible ? ['100%', '100%'] : ['55%', '55%']),
+    [isKeyboardVisible],
+  );
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   return (
     <BottomSheetModalProvider>
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
-        snapPoints={snapPoints}
-        // onChange={handleSheetChanges}
-      >
+        snapPoints={snapPoints}>
         {children}
       </BottomSheetModal>
     </BottomSheetModalProvider>
