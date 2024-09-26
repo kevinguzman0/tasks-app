@@ -29,7 +29,7 @@ export default function SwipeableBox({item}: {item: Task}) {
     if (item.completed) {
       setBGColor(colors('green'));
     } else {
-      setBGColor(colors('purple'));
+      setBGColor(colors('purple2'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.completed]);
@@ -51,7 +51,7 @@ export default function SwipeableBox({item}: {item: Task}) {
       enableTrackpadTwoFingerGesture
       leftThreshold={30}
       rightThreshold={40}
-      containerStyle={styles.container}
+      containerStyle={[styles.container, animatedStyle]}
       renderRightActions={(_, progress) =>
         renderRightActions(_, progress, swipeableRow, item)
       }

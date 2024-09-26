@@ -9,6 +9,7 @@ export const palette = {
   red: '#FF1744',
   yellow: '#FFD600',
   blue: '#2FD2CF', // Darkened the blue color
+  purple2: '#AB38FA', //AB38FA
 } as const;
 
 /**

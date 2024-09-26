@@ -16,7 +16,7 @@ type LeftActionsProps = {
 
 const LeftAction = ({dragX, swipeableRef, task}: LeftActionsProps) => {
   const {updateTask} = useTasks();
-  const bg = task.completed ? colors('purple') : colors('green');
+  const bg = task.completed ? colors('red') : colors('green');
   const iconName = task.completed ? 'closecircleo' : 'checkcircleo';
 
   const handleUpdateTask = async () => {
