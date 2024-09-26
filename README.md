@@ -101,6 +101,32 @@ TasksApp/
    - npm run ios: Builds and runs the app on an iOS simulator (Mac only).
    - npm test: Runs the unit tests using Jest.
 
+
+## Architecture and Design
+This React Native application follows a modular architecture to ensure scalability, maintainability, and separation of concerns. The project is structured into different directories within the src folder, such as components, hooks, screens, store, and others, each serving a specific purpose. Below is a breakdown of key architectural and design decisions made during the development of this application:
+
+**1. Component-Based Architecture**
+  The app is built using a component-based architecture, where each piece of functionality is divided into reusable components. 
+
+**2. State Management with Redux (RTK)**
+  State management is handled using Redux Toolkit (RTK) to maintain the global state in a predictable manner. Redux allows the application to maintain a central      store, making it easier to manage state across different components
+  - **RTK-Query** is used for making API requests and handling caching efficiently.
+
+**3. Custom Hooks**
+  The application leverages custom React hooks to encapsulate reusable logic and abstract away complexity from the components.
+
+**4. Design Principles**
+  - **SOLID Principles:**
+    - Single Responsibility Principle: Each component and module has one clearly defined purpose.
+    - Open/Closed Principle: The code is designed to be extendable without the need to modify existing components.
+    - Liskov Substitution Principle: Components are designed to be easily substitutable, adhering to their interfaces.
+    - Dependency Inversion Principle: High-level modules do not depend on low-level modules; both rely on abstractions (e.g., using context or dependency injection       via props).
+  - **DRY (Don't Repeat Yourself):**
+    Reusable components, hooks, and utility functions help avoid repetition in the codebase.
+  - **KISS (Keep It Simple, Stupid):**
+    The application avoids unnecessary complexity, focusing on simple and easily understandable code.      
+
+
 ## Contributing
 
 1. Fork the repository.
