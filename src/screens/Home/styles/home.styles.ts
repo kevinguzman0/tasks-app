@@ -29,9 +29,9 @@ export const styles = StyleSheet.create({
     height: hp(62),
     backgroundColor: colors('white'),
     borderTopLeftRadius: 45,
+    paddingTop: hp(4),
   },
   containerFlashListContent: {
-    paddingTop: 10,
     paddingBottom: 40,
     paddingHorizontal: 20,
   },
@@ -60,5 +60,13 @@ export const styles = StyleSheet.create({
     color: colors('darkGrey'),
     fontStyle: 'italic',
     paddingLeft: 4,
+  },
+  containerTextEmpty: {
+    marginTop: 20,
+  },
+  textEmpty: {
+    fontSize: 18,
+    color: colors('darkGrey'),
+    textAlign: 'center',
   },
 });

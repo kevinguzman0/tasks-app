@@ -1,5 +1,5 @@
 import {Text} from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import Swipeable, {
   SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -7,23 +7,21 @@ import {Task} from '@src/types/task.type';
 import {styles} from './styles/swipeableBox.styles';
 import {renderLeftActions} from './LeftAction';
 import {colors} from '@src/theme/colors';
-import Animated, {
-  SharedValue,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import {renderRightActions} from './RightAction';
+import {useSwipeableAnimation} from '@src/hooks/useSwipeableAnimation';
 
 export default function SwipeableBox({item}: {item: Task}) {
   const swipeableRow = useRef<SwipeableMethods>(null);
-  const date = new Date(item.createdAt).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  });
+  const {setBGColor, animatedStyle} = useSwipeableAnimation(colors('purple'));
 
-  const bg: SharedValue<string> = useSharedValue(colors('purple'));
+  const date = useMemo(() => {
+    return new Date(item.createdAt).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  }, [item.createdAt]);
 
   useEffect(() => {
     if (item.completed) {
@@ -31,18 +29,7 @@ export default function SwipeableBox({item}: {item: Task}) {
     } else {
       setBGColor(colors('purple2'));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.completed]);
-
-  const setBGColor = (color: string) => {
-    bg.value = withTiming(color, {duration: 500});
-  };
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: bg.value,
-    };
-  });
+  }, [item.completed, setBGColor]);
 
   return (
     <Swipeable

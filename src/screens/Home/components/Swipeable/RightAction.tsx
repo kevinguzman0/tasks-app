@@ -8,12 +8,15 @@ import {colors} from '@src/theme/colors';
 import {useTasks} from '@src/hooks/useTask.hook';
 import {useModal} from '../../context/ModalContext';
 import {Task} from '@src/types/task.type';
+import {ActionButtonProps, RightActionsProps} from './types/swipeable.type';
 
-type RightActionsProps = {
-  dragX: SharedValue<number>;
-  swipeableRef: React.RefObject<SwipeableMethods>;
-  task: Task;
-};
+const ActionButton = ({onPress, iconName, color}: ActionButtonProps) => (
+  <RectButton
+    onPress={onPress}
+    style={[styles.rectButton, {backgroundColor: color}]}>
+    <Icon name={iconName} size={20} color={'#fff'} />
+  </RectButton>
+);
 
 const RightAction = ({dragX, swipeableRef, task}: RightActionsProps) => {
   const {deleteTask} = useTasks();
@@ -31,20 +34,27 @@ const RightAction = ({dragX, swipeableRef, task}: RightActionsProps) => {
     editTaskHandle(task);
   };
 
-  return (
-    <>
-      <RectButton
-        style={{...styles.rectButton, backgroundColor: colors('red')}}
-        onPress={handleDelete}>
-        <Icon name="delete" size={20} color={'#fff'} />
-      </RectButton>
-      <RectButton
-        style={{...styles.rectButton, backgroundColor: colors('yellow')}}
-        onPress={handleUpdate}>
-        <Icon name="edit" size={20} color={'#fff'} />
-      </RectButton>
-    </>
-  );
+  const actionButtons = [
+    {
+      onPress: handleDelete,
+      iconName: 'delete',
+      color: colors('red'),
+    },
+    {
+      onPress: handleUpdate,
+      iconName: 'edit',
+      color: colors('yellow'),
+    },
+  ];
+
+  return actionButtons.map((action, index) => (
+    <ActionButton
+      key={index}
+      onPress={action.onPress}
+      iconName={action.iconName}
+      color={action.color}
+    />
+  ));
 };
 
 export const renderRightActions = (

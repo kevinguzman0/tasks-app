@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import ButtonSheetModal from '@src/components/Modals/ButtonSheetModal';
 import {BottomSheetView} from '@gorhom/bottom-sheet';
 import TextInputCustom from '@src/components/TextInputCustom';
@@ -8,73 +8,49 @@ import {useModal} from '../context/ModalContext';
 import {styles} from '../styles/createModal.styles';
 import {useErrorToast} from '@src/utilities/toastConfig';
 import {useHandleError} from '@src/utilities/errorHandle';
+import {useTaskForm} from '@src/hooks/useTaskForm';
 
 export default function CreateUpdateTaskModal() {
   const showError = useHandleError();
   const {showSuccessToast} = useErrorToast();
   const {bottomSheetModalRef, edit, editTask} = useModal();
-
-  const [title, setTitle] = React.useState('');
-  const [description, setDescription] = React.useState('');
-
   const {createTask, isCreateTaskLoading, updateTask} = useTasks();
+
+  const {title, setTitle, description, setDescription, initializeForm} =
+    useTaskForm(edit, editTask);
 
   useEffect(() => {
     initializeForm();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [edit]);
+  }, [initializeForm]);
 
-  const initializeForm = () => {
-    if (edit) {
-      setTitle(editTask!.title);
-      setDescription(editTask!.description);
-    } else {
-      setTitle('');
-      setDescription('');
-    }
-  };
-
-  const handleTask = async () => {
-    if (!title) {
-      showError('Title is required!');
-      return;
-    }
-    if (edit) {
-      handleUpdateTask();
-    } else {
-      handleCreateTask();
-    }
-  };
-
-  const handleUpdateTask = async () => {
+  const handleTask = useCallback(async () => {
     try {
-      await updateTask({
-        id: editTask!._id,
-        body: {title, description},
-      }).unwrap();
-      cleanModal('Task updated successfully');
+      if (edit) {
+        await updateTask({
+          id: editTask!._id,
+          body: {title, description},
+        });
+        showSuccessToast('Task updated successfully');
+      } else {
+        await createTask({title, description});
+        showSuccessToast('Task created successfully');
+      }
+      bottomSheetModalRef.current?.dismiss();
     } catch (errorResponse) {
       const {error} = errorResponse as {error: {msg: string}};
       showError(error.msg);
     }
-  };
-
-  const handleCreateTask = async () => {
-    try {
-      await createTask({title, description}).unwrap();
-      cleanModal('Task created successfully');
-    } catch (errorResponse) {
-      const {error} = errorResponse as {error: {msg: string}};
-      showError(error.msg);
-    }
-  };
-
-  const cleanModal = (message: string) => {
-    setTitle('');
-    setDescription('');
-    bottomSheetModalRef.current?.dismiss();
-    showSuccessToast(message);
-  };
+  }, [
+    edit,
+    editTask,
+    title,
+    description,
+    createTask,
+    updateTask,
+    showSuccessToast,
+    showError,
+    bottomSheetModalRef,
+  ]);
 
   return (
     <ButtonSheetModal>
@@ -87,17 +63,11 @@ export default function CreateUpdateTaskModal() {
 
         <View style={styles.padding}>
           <TextInputCustom
-            inputProps={{
-              testID: 'title-input',
-            }}
             placeholder="Title"
             value={title}
             onChangeText={setTitle}
           />
           <TextInputCustom
-            inputProps={{
-              testID: 'description-input',
-            }}
             placeholder="Description"
             value={description}
             onChangeText={setDescription}
@@ -105,10 +75,7 @@ export default function CreateUpdateTaskModal() {
         </View>
 
         <View style={styles.containerButton}>
-          <TouchableOpacity
-            testID="create-button"
-            style={styles.button}
-            onPress={handleTask}>
+          <TouchableOpacity style={styles.button} onPress={handleTask}>
             {isCreateTaskLoading ? (
               <ActivityIndicator color="#fff" />
             ) : (

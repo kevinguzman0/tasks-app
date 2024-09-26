@@ -7,12 +7,7 @@ import {colors} from '@src/theme/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useTasks} from '@src/hooks/useTask.hook';
 import {Task} from '@src/types/task.type';
-
-type LeftActionsProps = {
-  dragX: SharedValue<number>;
-  swipeableRef: React.RefObject<SwipeableMethods>;
-  task: Partial<Task>;
-};
+import {LeftActionsProps} from './types/swipeable.type';
 
 const LeftAction = ({dragX, swipeableRef, task}: LeftActionsProps) => {
   const {updateTask} = useTasks();
