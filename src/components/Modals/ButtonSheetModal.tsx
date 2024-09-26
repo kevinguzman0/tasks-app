@@ -8,9 +8,11 @@ export default function ButtonSheetModal({
 }: {
   children: React.ReactNode;
 }) {
+  const {bottomSheetModalRef} = useModal();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-  const {bottomSheetModalRef} = useModal();
+  const bg = 'transparent';
+
   const snapPoints = useMemo(
     () => (isKeyboardVisible ? ['100%', '100%'] : ['55%', '55%']),
     [isKeyboardVisible],
@@ -41,6 +43,7 @@ export default function ButtonSheetModal({
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
+        backgroundStyle={{backgroundColor: bg}}
         snapPoints={snapPoints}>
         {children}
       </BottomSheetModal>

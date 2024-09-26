@@ -21,6 +21,10 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     justifyContent: 'center',
     paddingLeft: 20,
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: colors('white'),
   },
   containerButton: {
     position: 'absolute',
